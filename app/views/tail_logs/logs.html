@@ -1,0 +1,20 @@
+tailing logs now....
+<%= javascript_tag do %>
+var offset=0;
+function get_logs() {
+$.ajax({
+    url: "tail_logs?offset=" + offset,
+}).done(function(data) {
+    console.log(data);
+    var logs = data.data.logs
+    offset += Number(data.data.offset);
+    var newDoc = document.open("text/html", "replace");
+    newDoc.write(logs);
+    newDoc.close();
+});
+}
+window.setInterval(function(){
+get_logs();
+}, 2000);
+
+<% end %>
